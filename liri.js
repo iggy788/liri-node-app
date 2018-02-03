@@ -37,54 +37,6 @@ var userPick = function (userRequest, functionData) {
             console.log("I'm sorry, I only know responses about Iggy's Tweets,Song Requests, Movie Requests & Anything Else You Tell Me to Say");
     }
 };
-// ------------------------------------------------------
-// Creates a function for getting a movie name
-// ------------------------------------------------------
-/*
-var userMovie = encodeURI(process.argv.slice(2));
-
-// request('Where do we want to go', 'What to do when it comes back');
-request('http://www.omdbapi.com/?t='+ userMovie + '&y=&plot=short&apikey=trilogy', function (err, response, body) {
-    console.log('-----------');
-    console.log('Title: ' + JSON.parse(body).Title);
-    console.log('Rating: ' + JSON.parse(body).Rated);
-    console.log('Year: ' + JSON.parse(body).Year);
-    console.log('Released: ' + JSON.parse(body).Released);
-    console.log('Director: ' + JSON.parse(body).Director);
-    console.log('-----------');
-});
-// ------------------------------------------------------
-// Creates a function for getting Mike's Tweets
-// ------------------------------------------------------
-var getTweets = function() {
-  var client = new twitter(keys.twitter);
-
-  var params = {screen_name: 'iggy788', count: 1};
-
-  client.get('statuses/user_timeline', params, function(
-    error,
-    tweets,
-    response
-  ) {
-    if (!error) {
-      var data = []; //empty array to hold data
-      for (var i = 0; i < tweets.length; i++) {
-        data.push({
-          'created at: ': tweets[i].created_at,
-          'Tweets: ': tweets[i].text,
-        });
-      }
-      console.log('************');
-      console.log(data);
-      console.log('************');
-      writeToLog('************');
-      writeToLog(data);
-      writeToLog('************');
-    }
-  });
-};
-*/
-// ------------------------------------------------------
 // Creates a function for getting a movie name
 // ------------------------------------------------------
 // If the user doesn't type a movie in, the program will output data for the movie Mr. Nobody.
@@ -92,13 +44,13 @@ var getMeMovie = function (movieName) {
   if (movieName === undefined) {
     movieName = 'Mr Nobody';
   }
-
-  var urlHit =
+// Create the http request for getting movie info
+  var httpRequest =
     'http://www.omdbapi.com/?t=' +
     movieName +
     '&y=&plot=full&tomatoes=true&r=json&apikey=trilogy';
 
-  request(urlHit, function(error, response, body) {
+  request(httpRequest, function(error, response, body) {
     if (!error && response.statusCode == 200) {
       var data = [];
       var jsonData = JSON.parse(body);
@@ -115,6 +67,36 @@ var getMeMovie = function (movieName) {
 
         'Rotton Tomatoes URL: ': jsonData.tomatoURL,
       });
+      console.log('************');
+      console.log(data);
+      console.log('************');
+      //writeToLog('************');
+      //writeToLog(data);
+      //writeToLog('************');
+    }
+  });
+};
+// ------------------------------------------------------
+// Creates a function for getting Mike's Tweets
+// ------------------------------------------------------
+var getTweets = function() {
+  var client = new twitter(keys.twitter);
+
+  var params = {screen_name: 'iggy788', count: 20};
+
+  client.get('statuses/user_timeline', params, function(
+    error,
+    tweets,
+    response
+  ) {
+    if (!error) {
+      var data = []; //empty array to hold data
+      for (var i = 0; i < tweets.length; i++) {
+        data.push({
+          'created at: ': tweets[i].created_at,
+          'Tweets: ': tweets[i].text,
+        });
+      }
       console.log('************');
       console.log(data);
       console.log('************');
