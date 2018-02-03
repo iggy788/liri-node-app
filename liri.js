@@ -70,9 +70,10 @@ var getMeMovie = function (movieName) {
       console.log('************');
       console.log(data);
       console.log('************');
-      //writeToLog('************');
-      //writeToLog(data);
-      //writeToLog('************');
+      writeToLog('MOVIES');
+      writeToLog('************');
+      writeToLog(data);
+      writeToLog('************');
     }
   });
 };
@@ -100,9 +101,10 @@ var getTweets = function() {
       console.log('************');
       console.log(data);
       console.log('************');
-      //writeToLog('************');
-      //writeToLog(data);
-      //writeToLog('************');
+      writeToLog('TWEETS');
+      writeToLog('************');
+      writeToLog(data);
+      writeToLog('************');
     }
   });
 };
@@ -118,7 +120,7 @@ var returnSpotify = function (songName) {
     var spotify = new Spotify(keys.spotify);
   //If it doesn't find a song, find Blink 182's What's my age again
   if (songName === undefined) {
-    songName = 'What\'s my age again';
+    songName = 'The Sign';
   }
 
   spotify.search({ type: 'track', query: songName }, function(err, data) {
@@ -143,9 +145,10 @@ var returnSpotify = function (songName) {
     console.log('************');
     console.log(songData);
     console.log('************');
-    //writeToLog('************');
-    //writeToLog(songData);
-    //writeToLog('************');
+    writeToLog('SONGS');
+    writeToLog('************');
+    writeToLog(songData);
+    writeToLog('************');
   });
 };
 // ------------------------------------------------------
@@ -156,9 +159,10 @@ var doWhatItSays = function() {
     console.log('************');
     console.log(data);
     console.log('************');
-    //writeToLog('************');
-    //writeToLog(data);
-    //writeToLog('************');
+    writeToLog('WHAT TO DO');
+    writeToLog('************');
+    writeToLog(data);
+    writeToLog('************');
     var dataArr = data.split(',');
 
     if (dataArr.length == 2) {
@@ -175,4 +179,18 @@ var searchThis = function(argOne, argTwo) {
   userPick(argOne, argTwo);
 };
 searchThis(process.argv[2], process.argv[3]);
+// ------------------------------------------------------
+// Creates a file of all requests
+// ------------------------------------------------------
+var writeToLog = function(data) {
+  fs.appendFile('log.txt', '\r\n\r\n');
+
+  fs.appendFile('log.txt', JSON.stringify(data), function(err) {
+    if (err) {
+      return console.log(err);
+    }
+
+    console.log('log.txt was updated!');
+  });
+};
 // ------------------------------------------------------
