@@ -5,11 +5,11 @@ var request = require('request');
 //Take these keys in keys.js add the program to this one
 var keys = require('./keys.js');
 //Used to import the client library for the Twitter
-var twitter = require('twitter');
+var Twitter = require('twitter');
 //Used to import the client library for the Spotify
-var spotify = require('node-spotify-api');
+var Spotify = require('node-spotify-api');
 //Used the Node.js file system module allow you to work with the file system
-//var fs = require('fs'); //file system
+var fs = require('fs'); //file system
 // ------------------------------------------------------
 //Make it so liri.js can take in one of the following commands:
 // ------------------------------------------------------
@@ -23,7 +23,7 @@ var userPick = function (userRequest, functionData) {
             break;
         //`spotify-this-song`
         case 'spotify-this-song':
-            getMeSpotify(functionData);
+            returnSpotify(functionData);
             break;
         //`movie-this`
         case 'movie-this':
@@ -80,7 +80,7 @@ var getMeMovie = function (movieName) {
 // Creates a function for getting Mike's Tweets
 // ------------------------------------------------------
 var getTweets = function() {
-  var client = new twitter(keys.twitter);
+  var client = new Twitter(keys.twitter);
 
   var params = {screen_name: 'iggy788', count: 20};
 
@@ -103,6 +103,68 @@ var getTweets = function() {
       //writeToLog('************');
       //writeToLog(data);
       //writeToLog('************');
+    }
+  });
+};
+// ------------------------------------------------------
+// Creates a function for finding artist name from spotify
+// ------------------------------------------------------
+var getArtistNames = function(artist) {
+  return artist.name;
+};
+
+//Function for finding songs on Spotify
+var returnSpotify = function (songName) {
+    var spotify = new Spotify(keys.spotify);
+  //If it doesn't find a song, find Blink 182's What's my age again
+  if (songName === undefined) {
+    songName = 'What\'s my age again';
+  }
+
+  spotify.search({ type: 'track', query: songName }, function(err, data) {
+    if (err) {
+      console.log('Error occurred: ' + err);
+      return;
+    }
+
+    var songs = data.tracks.items;
+    //var songs = data.tracks;
+    console.log(songs);
+    var songData = []; //empty array to hold data
+
+    for (var i = 0; i < songs.length; i++) {
+      songData.push({
+        'artist(s)': songs[i].artists.map(getArtistNames),
+        'song name: ': songs[i].name,
+        'preview song: ': songs[i].preview_url,
+        'album: ': songs[i].album.name,
+      });
+    }
+    console.log('************');
+    console.log(songData);
+    console.log('************');
+    //writeToLog('************');
+    //writeToLog(songData);
+    //writeToLog('************');
+  });
+};
+// ------------------------------------------------------
+//Creates a function for doing what we tell it to do
+// ------------------------------------------------------
+var doWhatItSays = function() {
+  fs.readFile('random.txt', 'utf8', function(error, data) {
+    console.log('************');
+    console.log(data);
+    console.log('************');
+    //writeToLog('************');
+    //writeToLog(data);
+    //writeToLog('************');
+    var dataArr = data.split(',');
+
+    if (dataArr.length == 2) {
+      userPick(dataArr[0], dataArr[1]);
+    } else if (dataArr.length == 1) {
+      userPick(dataArr[0]);
     }
   });
 };
