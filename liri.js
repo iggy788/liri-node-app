@@ -19,7 +19,7 @@ var userPick = function (userRequest, functionData) {
     switch (userRequest) {
         //`my-tweets`
         case 'my-tweets':
-            getTweets();
+            mikesTweets();
             break;
         //`spotify-this-song`
         case 'spotify-this-song':
@@ -27,7 +27,7 @@ var userPick = function (userRequest, functionData) {
             break;
         //`movie-this`
         case 'movie-this':
-            getMeMovie(functionData);
+            getMovie(functionData);
             break;
         //`do-what-it-says`
         case 'do-what-it-says':
@@ -40,7 +40,7 @@ var userPick = function (userRequest, functionData) {
 // Creates a function for getting a movie name
 // ------------------------------------------------------
 // If the user doesn't type a movie in, the program will output data for the movie Mr. Nobody.
-var getMeMovie = function (movieName) {
+var getMovie = function (movieName) {
   if (movieName === undefined) {
     movieName = 'Mr Nobody';
   }
@@ -80,7 +80,7 @@ var getMeMovie = function (movieName) {
 // ------------------------------------------------------
 // Creates a function for getting Mike's Tweets
 // ------------------------------------------------------
-var getTweets = function() {
+var mikesTweets = function() {
   var client = new Twitter(keys.twitter);
 
   var params = {screen_name: 'iggy788', count: 20};
