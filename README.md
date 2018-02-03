@@ -7,20 +7,22 @@ In this assignment, you will make LIRI. LIRI is like iPhone's SIRI. However, whi
 ### Before You Begin
 
 ### Install These Packages
-  * npm install twitter --save
+1. npm init -y
+2. npm install
+3. npm install twitter --save
     * [Twitter](https://www.npmjs.com/package/twitter)
-  * npm install --save node-spotify-api
+4. npm install --save node-spotify-api
     * [Spotify](https://www.npmjs.com/package/node-spotify-api)
-  * npm install request --save
+5. npm install request --save
     * [Request](https://www.npmjs.com/package/request)
-  * npm install dotenv --save
+6. npm install dotenv --save
     * [DotEnv](https://www.npmjs.com/package/dotenv)
 
 1. LIRI will display your latest tweets. As we do not want to display your personal account, or its keys, please make an alias account and add a few tweets to it!
 
 Follow the format presented in these queries
 
-* run `npm init -y` &mdash; this will initialize a `package.json` file for your project
+* run npm init -y &mdash; this will initialize a `package.json` file for your project
 * node liri.js my-tweets
 * node liri.js spotify-this-song '<song name here>'
 * node liri.js movie-this '<movie name here>'
