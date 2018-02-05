@@ -118,7 +118,7 @@ var getArtistNames = function(artist) {
 //Function for finding songs on Spotify
 var returnSpotify = function (songName) {
     var spotify = new Spotify(keys.spotify);
-  //If it doesn't find a song, find Blink 182's What's my age again
+  //If it doesn't find a song, find Ace of Base, The Sign
   if (songName === undefined) {
     songName = 'The Sign';
   }
